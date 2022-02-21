@@ -8,12 +8,34 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="intro"></div>
-    <div class="game">
-        <ul class="gBoard" id="gBoard">
+    <div class="intro">
+        <div class="intro-title">
+            
+        </div>
+        <div class="controlBox">
 
-        </ul>
+        </div>
     </div>
+    <div class="gameScreen">
+        <div class="turnStatus">
+            <h1>Turn Status</h1><br>
+            <h1 class="status" id="message"></h1>
+        </div>
+        <div class="player1Stats">
+            <h1 class='pTitle' id='player1'>Player 1</h1>
+            <h2 class="wins">Wins:</h2>
+        </div>
+        <div class="game" id='gBoard'>
+        </div>
+        <div class="player2Stats" id='player2'>
+            <h1 class='pTitle'>Player 2</h1>
+            <h2 class="wins">Wins:</h2>
+        </div>
+        <div class="resetButton">
+            <button class="reset" id="reset">Reset Game</button>
+        </div>
+    </div>
+   
 </body>
 <script src="script.js"></script>
 </html>

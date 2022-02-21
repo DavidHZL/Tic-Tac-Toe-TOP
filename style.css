@@ -2,13 +2,37 @@
     margin: 0 auto;
     padding: none;
 }
+.intro {
+    display: flex;
+    align-items: center;
+    font-size: 4rem;
+    justify-content: center;
+    flex-direction: column;
+}
 
-.gBoard {
+.title {
+
+}
+
+.gameScreen {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 4fr;
+}
+
+.turnStatus {
+    grid-area: 1/1/2/4;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#gBoard {
     display: grid;
     grid-template-columns: repeat(3, 200px);
     grid-template-rows: repeat(3, 200px);
     align-items: center;
-    gap: 15px;
+    margin-top: 15px;
 }
 
 .tile{
@@ -18,4 +42,12 @@
     height: 200px;
     text-align: center;
     background-color: aquamarine;
+}
+
+.tile:nth-child(odd) {
+    background-color: azure;
+}
+
+.player1Stats, .player2Stats {
+    text-align: center;
 }
