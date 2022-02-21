@@ -3,11 +3,17 @@ const introTitle = document.querySelector('.intro-title');
 const controlBox = document.querySelector('.controlBox');
 const gameScreen = document.querySelector('.gameScreen');
 
-const Player = (marker) => {
+const Player = (marker, wins) => {
     
     const getSign = () => {return marker;};
 
-    return {getSign: getSign};
+    const getWins = () => {return wins;};
+
+    const addWin = () => {wins++;};
+
+    return {getSign: getSign,
+            getWins: getWins,
+            addWin: addWin};
 }
 
 const gameBoard = (() => {
@@ -70,6 +76,8 @@ const displayController = (() => {
             })
             gBoard.append(newDiv);
         }
+        gameController.updateWins();
+        setMessageElement("Player X's turn");
     }
 
     resetButton.addEventListener("click", (e) => {
@@ -82,7 +90,6 @@ const displayController = (() => {
     
     const updateGameBoard = () => {
         let tileElements = document.querySelectorAll('#tile');
-        console.log(tileElements);
         for(let i = 0; i < tileElements.length; i++){
             tileElements[i].textContent = gameBoard.getField(i);
         }
@@ -92,7 +99,7 @@ const displayController = (() => {
         if (winner === "Draw") {
           setMessageElement("It's a draw!");
         } else {
-          setMessageElement(`Player ${winner} has won!`);
+          setMessageElement('Player ' + winner + ' has won!');
         }
       };
     
@@ -104,15 +111,16 @@ const displayController = (() => {
 })();
 
 const gameController = (() => {
-    const playerX = Player('X');
-    const playerO = Player('O');
+    const playerX = Player('X', 0);
+    const playerO = Player('O', 0);
     let round = 1;
     let isOver = false;
 
     const playRound = (fieldIndex) => {
         gameBoard.setField(fieldIndex, getCurrentPlayerSign());
         if (checkWinner(fieldIndex)) {
-            displayController.setMessageElement(getCurrentPlayerSign());
+            displayController.setMessageElement('Player ' + getCurrentPlayerSign() + ' Wins!');
+            giveWin(getCurrentPlayerSign());
             isOver = true;
             return;
         }
@@ -152,6 +160,24 @@ const gameController = (() => {
           );
     };
 
+    const giveWin = (marker) => {
+        if (marker === 'X') {
+            playerX.addWin();
+            updateWins();
+        }
+        if (marker === 'O') {
+            playerO.addWin();
+            updateWins();
+        }
+    }
+
+    const updateWins = () => {
+        let xWins = document.getElementById('playerX');
+        let oWins = document.getElementById('playerO');
+        xWins.textContent = playerX.getWins();
+        oWins.textContent = playerO.getWins();
+    }
+
     const getIsOver = () => {
         return isOver;
     }
@@ -162,7 +188,7 @@ const gameController = (() => {
     }
 
     
-    return { playRound, getIsOver, reset };
+    return { playRound, getIsOver, reset, updateWins };
 })();
 
 displayController.startUp();
